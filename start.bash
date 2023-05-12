@@ -4,6 +4,7 @@
 # Sarting the application - Server
 #
 cd server
+npm i
 npm run build
 npm run dev &
 
@@ -12,5 +13,6 @@ npm run dev &
 #
 cd ..
 cd client
+npm i
 npm start
 
