@@ -5,6 +5,7 @@
 #### Open the terminal and run the following command:
 - git clone https://github.com/georgesmiaka/language_based_security_tda602_project.git
 #### Navigate to the root directory of the application and start the application by running the following command
+- cd language_based_security_tda602_project
 - ./strat.bash
 
 ### Manual Installation
