@@ -4,26 +4,44 @@ import { IUserService } from "../service/iuser.service";
 import { userDBService } from "../service/userdb.service";
 
 
-export function makeUserRouter(userService : IUserService) : Express.Express {
-    const userRouter : Express.Express = Express();
- 
+export function makeUserRouter(userService: IUserService): Express.Express {
+    const userRouter: Express.Express = Express();
+
+    const checkAuth = async (req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+        const key: string = req.body.key;
+        const ms = await userService;
+        const users: Array<User> = await ms.getUsers();
+        var auth = false;
+        if (!key) {
+            return res.status(401).send("Unauthorized");
+        }
+        for (let index = 0; index < users.length; index++) {
+            if (key === users[index].name) {
+                auth = true;
+            }
+        }
+        if (!auth) {
+            return res.status(401).send("Unauthorized");
+        }
+        next();
+    };
+
     userRouter.get("/", async (req: Express.Request, res: Express.Response) => {
         try {
             const ms = await userService;
-            const users : Array<User> = await ms.getUsers();
-            res.status(200).send(users); 
-        } catch (e : any) {
+            const users: Array<User> = await ms.getUsers();
+            res.status(200).send(users);
+        } catch (e: any) {
             res.status(500).send(e.message);
         }
     });
 
-    // POST or PUT /movie 
-    userRouter.put("/", async (req: Express.Request, res: Express.Response) => {
+    userRouter.put("/", checkAuth, async (req: Express.Request, res: Express.Response) => {
         try {
             const username: string = req.body.username;
             const password: string = req.body.password;
             const name: string = req.body.name;
-            
+
             if (!username) {
                 res.status(400).send("Missing username");
                 return;
@@ -33,9 +51,9 @@ export function makeUserRouter(userService : IUserService) : Express.Express {
                 return;
             }
             const ms = await userService;
-            const user : User = await ms.createUser(username, password, name);
+            const user: User = await ms.createUser(username, password, name);
             res.status(201).send(user);
-        } catch (e : any) {
+        } catch (e: any) {
             res.status(500).send(e.message);
         }
     });
@@ -43,11 +61,11 @@ export function makeUserRouter(userService : IUserService) : Express.Express {
     userRouter.post("/login", async (req: Express.Request, res: Express.Response) => {
         try {
             const ms = await userService;
-            const users : Array<User> = await ms.getUsers();
+            const users: Array<User> = await ms.getUsers();
 
             const username: string = req.body.username;
             const password: string = req.body.password;
-            var answer = {respons:"Failed", data:"Failed"};
+            var answer = { respons: "Failed", data: "Failed" };
             if (!username) {
                 res.status(400).send(answer);
                 return;
@@ -62,9 +80,9 @@ export function makeUserRouter(userService : IUserService) : Express.Express {
             }
             for (let index = 0; index < users.length; index++) {
                 if (username === users[index].username && password === users[index].password) {
-                    answer = {respons:"success", data:users[index].name};
+                    answer = { respons: "success", data: users[index].name };
                 }
-                
+
             }
             res.status(201).send(answer)
         } catch (e: any) {
@@ -72,28 +90,26 @@ export function makeUserRouter(userService : IUserService) : Express.Express {
         }
     });
 
-
-    // DELETE /movie/id 
-    userRouter.delete("/:id", async (req: Express.Request, res: Express.Response) => {
+    userRouter.delete("/:id", checkAuth, async (req: Express.Request, res: Express.Response) => {
         try {
             const ms = await userService;
-            const id : number = parseInt(req.params.id, 10);
-            const completed : boolean = await ms.delUser(id);
-            if (! completed) {
+            const id: number = parseInt(req.params.id, 10);
+            const completed: boolean = await ms.delUser(id);
+            if (!completed) {
                 res.status(400).send(`No user with id ${id}\n`);
                 return;
             }
             res.status(201).send("User is deleted\n");
-        } catch (e : any) {
+        } catch (e: any) {
             res.status(500).send(e.message);
         }
     });
 
-    
+
 
     return userRouter;
 }
 
-export function makeDefaultUserRouter() : Express.Express {
+export function makeDefaultUserRouter(): Express.Express {
     return makeUserRouter(userDBService);
 }

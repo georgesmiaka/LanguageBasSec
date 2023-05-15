@@ -23,12 +23,13 @@ function DelMovie() {
             .then((data) => setDocs(data));
     }, []);
 
-    async function deleteMovie(id) {
+    async function deleteMovie(id, key) {
         const response = await fetch("/movie/" + id, {
             method: "DELETE",
             headers: { "content-type": "application/json", },
             body: JSON.stringify({
-                id: id
+                id: id,
+                key: key
             }),
         });
         const data = await response.json();
@@ -63,7 +64,7 @@ function DelMovie() {
 
                 <div className="product-action">
                     <Button label="" icon="pi pi-trash" onClick={(event) => {
-                        deleteMovie(data.id); redirection();
+                        deleteMovie(data.id, user); redirection();
                         window.location.reload(false);
                     }} />
                 </div>

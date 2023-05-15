@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import { makeDefaultMovieRouter } from "./router/movie.router";
 import { makeDefaultUserRouter } from "./router/user.router";
 import dotenv from 'dotenv';
@@ -8,6 +8,7 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 8080;
+
 
 app.use(express.json())  // Get data in json
 app.use(cors.default());

@@ -18,7 +18,7 @@ function AddMovie() {
         }
     }, []);
 
-    async function addNewMovie(titel, year, description, picture, genre) {
+    async function addNewMovie(titel, year, description, picture, genre, key) {
         const response = await fetch("/movie", {
             method: "PUT",
             headers: { "content-type": "application/json", },
@@ -27,7 +27,8 @@ function AddMovie() {
                 year: year,
                 description: description,
                 picture: picture,
-                genre: genre
+                genre: genre,
+                key: key
             }),
         });
         const data = await response.json();
@@ -39,7 +40,7 @@ function AddMovie() {
         <div className="Body">
             <form onSubmit={async (event) => {
                 event.preventDefault();
-                var respons = await addNewMovie(titel, year, description, picture, genre);
+                var respons = await addNewMovie(titel, year, description, picture, genre, user);
                
                 if (respons.respons === "success") {
                     setMessage(true);
