@@ -17,7 +17,7 @@ export function makeMovieRouter(movieService: IMovieService, userService: IUserS
         const users: Array<User> = await ms.getUsers();
         var auth = false;
         if (!key) {
-            return res.status(401).send("Unauthorized");
+            return res.status(401).send("Response: Unauthorized\n");
         }
         for (let index = 0; index < users.length; index++) {
             if (key === users[index].name) {
@@ -25,7 +25,7 @@ export function makeMovieRouter(movieService: IMovieService, userService: IUserS
             }
         }
         if (!auth) {
-            return res.status(401).send("Unauthorized");
+            return res.status(401).send("Response: Unauthorized\n");
         }
         next();
     };
