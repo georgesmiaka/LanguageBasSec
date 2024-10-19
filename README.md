@@ -1,4 +1,4 @@
-# language_based_security_tda602_project
+# Language Based Security Project
 
 ## User manual
 ### Automatic Installation
