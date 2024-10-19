@@ -32,3 +32,8 @@ Based on the course project from Chalmers, course code TDA602 (Language-Based Se
 ### You can now view webclient in the browser.
 http://localhost:3000
 
+## Middleware implementation
+The initial attacks can be reproduced by following the steps in the docs file, under the subtitle 'Middleware Implementation.' This project aims to expand by introducing new scenarios in the future. For additional cases, see the section below titled 'New Additions.'
+
+## New Additions
+
