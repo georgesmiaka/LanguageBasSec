@@ -76,7 +76,7 @@ function Login() {
                 <div className="spaceVertical"></div>
                 <div className="spaceVertical"></div>
                 <div className="spaceVertical"></div>
-                <h6 className="textHeader">Don't have an account yet?<Link to="/signup"> Sign up</Link></h6>
+                {/*<h6 className="textHeader">Don't have an account yet?<Link to="/signup"> Sign up</Link></h6>*/}
             </div>
         </div>
     );

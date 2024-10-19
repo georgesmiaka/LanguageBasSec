@@ -10,5 +10,5 @@ const userModel = {
         return user;
     },
 };
-
+//Mongodb user: test, 1,..,6
 module.exports = userModel;
