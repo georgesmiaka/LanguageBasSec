@@ -1,4 +1,6 @@
 # Language Based Security Project
+## The goal of the project
+Based on the course project from Chalmers, course code TDA602 (Language-Based Security), the aim of this project is to conduct an in-depth study of the security aspects of languages such as JavaScript and frameworks like Express.
 
 ## User manual
 ### Automatic Installation
